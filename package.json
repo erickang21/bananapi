@@ -26,5 +26,6 @@
     "klasa": "github:dirigeants/klasa",
     "morgan": "^1.9.1",
     "pg": "^7.4.3"
-  }
+  },
+  "start": "NODE_ENV=production node index.js"
 }
