@@ -4,7 +4,8 @@
   "description": "An awesome API for your convenience.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production node index.js"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,5 @@
     "morgan": "^1.9.1",
     "pg": "^7.4.3"
   },
-  "start": "NODE_ENV=production node index.js"
+  
 }
