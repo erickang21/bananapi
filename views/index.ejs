@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<!-- <div class="container">
+    <h2>Boi I wonder wut this is?</h2>
+</div> -->
+  <!-- <head>
+    <title>BananAPI</title>
+    <% include partials/head.ejs %>
+   </head> -->
+   <head>
+      <title>Home - BananAPI</title>
+     <% include partials/navbar.ejs %>
+     <% include partials/head.ejs %>
+   </head>
+
+  
+    
+    <div class="jumbotron">
+      <center>
+          <h1 class="display-3"><strong style="color: #36e43a"></strong>BananAPI</h1>
+          <p class="lead">An API designed to customize your memes, and make your life easier.</p>
+      </center>
+    </div>
+    
+    <p class="lead">I am currently serving <strong style="color: #E84536;"><%- count %></strong> users! Could you be the next?</p>
+  
+
+   <h3>Why BananAPI</h3>
+   <ul>
+   <li><b>Uptime</b> - We have minimal to no downtime.</li>
+   <li><b>Development</b> - This API is always being developed and made better! (Click Support to see what's going on!)</li>
+   <li><b>Fun</b> - Memes taken to another level. You can change some text to your liking.</li>
+   <li><b>Simple</b> - Stop hassling with image manipulation or parsing JSON. Image endpoints return the Buffer directly.</li>
+   <li><b>Help where needed</b> - Join our <a href="https://discord.gg/3Nxb7yZ">Discord server</a> for help wherever you need it.</li>
+   <li><b>Easy Authenication</b> - Grab an API key by joining our Discord server above. Pass it in a header, and you're good to go.</li>
+   
+  </ul>
+
+    <div>
+      <h4>BananAPI is brought to you by...</h4>
+      <ul>
+        <li><img src="https://cdn.discordapp.com/avatars/277981712989028353/9f8f265d01d9be1abf95a2c115149404.png?size=2048" width="50" height="50"/><b>dat banana boi#1982</b></li>
+        <li><img src="https://cdn.discordapp.com/avatars/292690616285134850/a_0efc66615d1e846b3ef581f63b526a46.gif?size=2048&_=.gif&f=.gif" width="50" height="50"/><b>Free TNT#5796</b></li>
+        <li><img src="https://cdn.discordapp.com/avatars/302604426781261824/a_734683f320339aac29cc0d571577e77d.gif?size=1024&_=.gif&f=.gif" width="50" height="50"/><b>Ice#1234</b></li>
+      </ul>
+      <p>We welcome you to try our API! It took a lot of hard work but is definitely worth it.
+
+        Got suggestions? We got code. Join our Discord (click Support) and you will definitely be heard.
+
+        Cheers!
+      </p>
+    </div>
+
+    
+    <% include partials/scripts.ejs %>
+
+</html>

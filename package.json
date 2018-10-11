@@ -1,0 +1,30 @@
+{
+  "name": "bananapi",
+  "version": "1.0.0",
+  "description": "An awesome API for your convenience.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bananaboy21/bananapi.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bananaboy21/bananapi/issues"
+  },
+  "homepage": "https://github.com/bananaboy21/bananapi#readme",
+  "dependencies": {
+    "debug": "^4.0.1",
+    "discord.js": "github:discordjs/discord.js",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "express-promise-router": "^3.0.3",
+    "express-session": "^1.15.6",
+    "klasa": "github:dirigeants/klasa",
+    "morgan": "^1.9.1",
+    "pg": "^7.4.3"
+  }
+}

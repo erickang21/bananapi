@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Examples - BananAPI</title>
+    <% include partials/navbar.ejs %>
+    <% include partials/head.ejs %>
+</head>
+
+<div class="jumbotron">
+    <center>
+        <h1 class="display-3"><strong style="color: #36e43a"></strong>API Examples</h1>
+        <p class="lead">Use these examples in your code. They're here for copying. (You don't see that much, do you?)</p>
+    </center>
+</div>
+    
+
+<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs2015.min.css"/>
+    </head>
+    <body>
+      <%- code %>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+
+<% include partials/scripts.ejs %>
+
+</html>
