@@ -2,8 +2,8 @@ const { Client, PermissionLevels } = require("klasa");
 const config = require("./config.json");
 
 const permissionLevels = new PermissionLevels()
-  .add(1, (m) => config.devs.includes(m.author.id))
-  .add(10, (m) => m.author.id === "277981712989028353");
+  .add(1, (m) => config.devs.includes(m.author.id), { fetch: true })
+  .add(10, (m) => m.author.id === "277981712989028353", { fetch: true });
 
 class BananAPIClient extends Client {
   constructor(app) {
