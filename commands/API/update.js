@@ -7,7 +7,7 @@ class Update extends Command {
     super(...args, {
       description: "Updates the bot and the API, then restarts.",
       name: "update",
-      permLevel: 1
+      permissionLevel: 1
     });
   }
 

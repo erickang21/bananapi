@@ -27,7 +27,7 @@ class Apply extends Command {
         .addField("Project Description", desc.content)
         .setFooter(msg.author.tag, msg.author.displayAvatarURL({ format: "png", size: 2048 }));
       await this.client.channels.get("492085452430639124").send("<@277981712989028353>", { embed: embed });
-      await msg.author.send("Alright! I have notified the devs, who will get back to you shortly with your API key. You'll hear back from me once you're accepted. GLHF!")
+      await msg.author.send("Alright! I have notified the devs, who will get back to you shortly with your API key. You'll hear back from me once you're accepted. GLHF!");
     });
   }
 }

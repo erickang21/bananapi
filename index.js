@@ -1,17 +1,23 @@
 const polka = require("polka");
 const send = require("@polka/send-type");
+
 const app = polka({
   onNoMatch: (req, res) => res.render("404.ejs")
 });
+
 const { Canvas } = require("canvas-constructor");
 const fsn = require("fs-nextra");
 const jsify = require("./jsify.js");
 const fs = require("fs").promises;
 const crypto = require("crypto");
+const ejs = require("polka-ejs");
 const { Pool } = require("pg");
 const config = require("./config.json");
-const { Client } = require("klasa");
-const md = require("markdown-it")({ langPrefix: "lang-" });
+
+const md = require("markdown-it")({
+  langPrefix: "lang-"
+});
+
 app.db = new Pool({
   host: "localhost",
   user: "bananaboy21",
@@ -19,43 +25,19 @@ app.db = new Pool({
   database: "bananapi"
 });
 
-Client.defaultPermissionLevels
-  .add(1, (client, msg) => config.devs.includes(msg.author.id))
-  .add(10, (client, msg) => msg.author.id === "277981712989028353");
+const BananAPIClient = require("./bot.js");
+new BananAPIClient(app).login();
 
-class BananAPIClient extends Client {
-  constructor() {
-    super({
-      prefix: "b.",
-      commandEditing: true,
-      typing: false,
-      readyMessage: (client) => `${client.user.tag}, Ready to serve ${client.guilds.size} guilds and ${client.users.size} users`
-    });
-  }
-
-  login() {
-    return super.login(config.token);
-  }
-}
-
-
-const client = new BananAPIClient();
-
-client.login();
-
-// just for ease of use
-client.config = config;
-client.db = app.db;
 app.db.connect();
 app.cache = {};
-// test
+
 app.use((req, res, next) => {
   res.send = send.bind(null, res, 200);
   res.sendStatus = send.bind(null, res);
   next();
 });
 
-app.use(require("./ejs.js"));
+app.use(ejs());
 
 app.use("/api", (req, res, next) => {
   const auth = req.headers["authorization"]; // Get Header
@@ -92,7 +74,9 @@ app.get("/support", (req, res) => {
 
 app.get("/examples", async (req, res) => {
   const markdown = await fs.readFile("./markdown/examples.md");
-  res.render("examples.ejs", { code: md.render(markdown.toString()) });
+  res.render("examples.ejs", {
+    code: md.render(markdown.toString())
+  });
 });
 
 
@@ -112,26 +96,20 @@ app.get("/api/humansgood", async (req, res) => {
 
 app.get("/api/8ball", (req, res) => {
   const query = req.query.question;
-  if (!query) { 
-    res.sendStatus(400, { message: "No question provided." });
+  if (!query) return res.sendStatus(400, { message: "No question provided." });
+  const answers = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes, definitely.", "You may rely on it.", "As I see it, yes.", "Most likely.", " Outlook good.", "Yes.", "Signs point to yes.", "Reply hazy, try again.", "Ask again later.", "Better not tell you now.", "Cannot predict now.", "Concentrate and ask again.", "Do not count on it.", "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."];
+  const index = Math.floor(Math.random() * answers.length);
+  const choice = answers[index];
+  let type;
+  if (index < 10) {
+    type = "positive";
+  } else if (index > 9 && index < 15) {
+    type = "neutral";
   } else {
-    const answers = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes, definitely.", "You may rely on it.", "As I see it, yes.", "Most likely.", " Outlook good.", "Yes.", "Signs point to yes.", "Reply hazy, try again.", "Ask again later.", "Better not tell you now.", "Cannot predict now.", "Concentrate and ask again.", "Do not count on it.", "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."];
-    const index = Math.floor(Math.random() * answers.length);
-    const choice = answers[index];
-    let type;
-    if (index < 10) {
-      type = "positive";
-    } else if (index > 9 && index < 15) {
-      type = "neutral";
-    } else {
-      type = "negative";
-    }
-    res.send({ question: query, response: choice, type: type });
+    type = "negative";
   }
-
+  res.send({ question: query, response: choice, type: type });
 });
-
-
 
 app.get("/api/trumptweet", async (req, res) => {
   const text = req.query.text;
