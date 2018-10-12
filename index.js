@@ -105,7 +105,7 @@ app.get("/api/humansgood", async (req, res) => {
     .addImage(image, 0, 0, 930, 928)
     .setTextFont("24px Arial")
     .setTextAlign("left")
-    .addMultilineText("e ee e e e e e e ee e e e e e  e", 525, 780, 140, 30)
+    .addMultilineText(text, 525, 780, 140, 30)
     .toBufferAsync();
   res.send(buff, { "Content-Type": "image/png" }); 
 });
