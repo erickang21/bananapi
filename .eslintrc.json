@@ -27,7 +27,6 @@
       "arraysInObjects": true,
       "objectsInObjects": true
     }],
-    "curly": ["error", "multi-or-nest", "consistent"],
     "eqeqeq": ["error", "always"],
     "camelcase": "error",
     "no-caller": "error",
@@ -100,7 +99,6 @@
       "after": true
     }],
     "semi-style": ["error", "last"],
-    "space-before-function-paren": ["error", "never"],
     "space-in-parens": ["error", "never"],
     "comma-dangle": ["error", "never"],
     "space-infix-ops": "error",

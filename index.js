@@ -95,6 +95,20 @@ app.get("/examples", async (req, res) => {
   res.render("examples.ejs", { code: md.render(markdown.toString()) });
 });
 
+
+app.get("/api/humansgood", async (req, res) => {
+  const text = req.query.text;
+  if (!text) res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 32) res.sendStatus(400, { message: "Text must be less than 32 characters." });
+  const image = await fsn.readFile(`${process.cwd()}/assets/humansgood.jpg`);
+  const buff = await new Canvas(930, 928)
+    .addImage(image, 0, 0, 930, 928)
+    .setTextFont("24px Arial")
+    .setTextAlign("left")
+    .addMultilineText("e ee e e e e e e ee e e e e e  e", 525, 780, 140, 30)
+    .toBufferAsync();
+});
+
 app.get("/api/8ball", (req, res) => {
   const query = req.query.question;
   if (!query) { 
