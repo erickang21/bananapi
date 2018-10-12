@@ -107,6 +107,7 @@ app.get("/api/humansgood", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText("e ee e e e e e e ee e e e e e  e", 525, 780, 140, 30)
     .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
 });
 
 app.get("/api/8ball", (req, res) => {
