@@ -9,14 +9,28 @@ const crypto = require("crypto");
 
 app.get("/humansgood", async (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 32) res.sendStatus(400, { message: "Text must be less than 32 characters." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 32) return res.sendStatus(400, { message: "Text must be less than 32 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/humansgood.jpg`);
   const buff = await new Canvas(930, 928)
     .addImage(image, 0, 0, 930, 928)
     .setTextFont("24px Arial")
     .setTextAlign("left")
     .addMultilineText(text, 525, 780, 140, 30)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
+app.get("/autism", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 40) return res.sendStatus(400, { message: "Text must be less than 40 characters." });
+  const image = await fs.readFile(`${process.cwd()}/assets/autism.jpg`);
+  const buff = await new Canvas(640, 852)
+    .addImage(image, 0, 0, 640, 852)
+    .setTextFont("24px Arial")
+    .setTextAlign("left")
+    .addMultilineText(text, 250, 370, 250, 30)
     .toBufferAsync();
   res.send(buff, { "Content-Type": "image/png" }); 
 });
