@@ -2,6 +2,7 @@ const { Client, PermissionLevels } = require("klasa");
 const config = require("./config.json");
 
 const permissionLevels = new PermissionLevels()
+  .add(0, () => true)
   .add(1, (_, m) => config.devs.includes(m.author.id), { fetch: true })
   .add(10, (_, m) => m.author.id === "277981712989028353", { fetch: true });
 
