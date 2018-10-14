@@ -6,7 +6,10 @@ const { Canvas } = require("canvas-constructor");
 const jsify = require("../jsify.js");
 const fs = require("fs").promises;
 const crypto = require("crypto");
-
+/**
+ * @api {get} /api/humansgood/
+ * @apiParam {String} text Text to use.
+ */
 app.get("/humansgood", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
