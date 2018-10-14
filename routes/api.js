@@ -40,8 +40,8 @@ app.get("/8ball", (req, res) => {
 
 app.get("/trumptweet", async (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 240) res.sendStatus(400, { message: "Text must be less than 240 characters." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 240) return res.sendStatus(400, { message: "Text must be less than 240 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/trumptweet.jpg`);
   const buff = await new Canvas(1200, 628)
     .addImage(image, 0, 0, 1200, 628)
@@ -54,8 +54,8 @@ app.get("/trumptweet", async (req, res) => {
 
 app.get("/legends", async (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 11) res.sendStatus(400, { message: "Text is too long. The limit is 11 characters." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 11) return res.sendStatus(400, { message: "Text is too long. The limit is 11 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/legends.jpg`);
   const buff = await new Canvas(1080, 1460)
     .addImage(image, 0, 0, 1080, 1460)
@@ -68,7 +68,7 @@ app.get("/legends", async (req, res) => {
 
 app.get("/disabled", async (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/disabled_template.jpg`);
   const buff = await new Canvas(384, 744)
     .addImage(image, 0, 0, 384, 744)
@@ -81,7 +81,7 @@ app.get("/disabled", async (req, res) => {
 
 app.get("/sleeptight", async (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/sleeptight_template.jpg`);
   const buff = await new Canvas(680, 684)
     .addImage(image, 0, 0, 680, 684)
@@ -94,7 +94,7 @@ app.get("/sleeptight", async (req, res) => {
 
 app.get("/abandon", async (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/abandon_template.jpg`);
   const buff = await new Canvas(764, 768)
     .addImage(image, 0, 0, 764, 768)
@@ -107,13 +107,13 @@ app.get("/abandon", async (req, res) => {
 
 app.get("/reverse", (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
   res.send({ text: text.split("").reverse().join("") });
 });
 
 app.get("/alert", async (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/alert_template.jpg`);
   const buff = await new Canvas(906, 608)
     .addImage(image, 0, 0, 906, 608)
@@ -126,7 +126,7 @@ app.get("/alert", async (req, res) => {
 
 app.get("/hash", (req, res) => {
   const text = req.query.text;
-  if (!text) res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
   const hash = crypto.createHash("md5").update(text).digest("hex");
   res.send({ text: text, hash: hash });
 });
