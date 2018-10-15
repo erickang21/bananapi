@@ -69,6 +69,20 @@ app.get("/trumptweet", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+app.get("/headache", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 25) return res.sendStatus(400, { message: "Text must be less than 25 characters." });
+  const image = await fs.readFile(`${process.cwd()}/assets/headache.jpg`);
+  const buff = await new Canvas(611, 746)
+    .addImage(image, 0, 0, 611, 746)
+    .setTextFont("48px Arial")
+    .setTextAlign("left")
+    .addMultilineText(text, 350, 450, 200, 40)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
 app.get("/legends", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
