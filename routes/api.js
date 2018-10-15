@@ -15,7 +15,7 @@ const superagent = require("superagent");
 
 /**
  * @apiDefine Error
- * @apiError Something went wrong on your side.
+ * @apiError ClientError Something went wrong on your side.
  * @apiErrorExample {json} Error-Response:
  *     HTTP/1.1 4xx Client Error
  *     {
