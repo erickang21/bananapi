@@ -29,12 +29,10 @@ app.get("/peek", async (req, res) => {
   const imageUrl = req.query.url || req.query.image || req.query.imageURL;
   if (!imageUrl) return res.sendStatus(400, { message: "No image URL was provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/peek.jpg`);
-  let imgToAdd;
-  superagent.get(imageUrl)
-    .then((resp) => imgToAdd = resp.body);
+  const resp = await superagent.get(imageUrl);
   const buff = await new Canvas(320, 320)
     .addImage(image, 0, 0, 320, 320)
-    .addImage(imgToAdd, 0, 160, 160, 160)
+    .addImage(resp.body, 0, 160, 160, 160)
     .toBufferAsync();
   res.send(buff, { "Content-Type": "image/png" }); 
 });
