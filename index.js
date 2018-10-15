@@ -1,9 +1,13 @@
 const polka = require("polka");
 const send = require("@polka/send-type");
+const path = require("path");
 
 const app = polka({
   onNoMatch: (_, res) => res.render("404.ejs")
 });
+
+const serve = require("serve-static");
+app.use("/docs", serve(path.join(__dirname, "docs"), { index: "index.html" }));
 
 const fs = require("fs").promises;
 const mountRoutes = require("./routes");

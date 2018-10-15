@@ -7,9 +7,29 @@ const jsify = require("../jsify.js");
 const fs = require("fs").promises;
 const crypto = require("crypto");
 const superagent = require("superagent");
+
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "Some hopefully helpful error message of what happened."
+ *     }
+ */
+
 /**
  * @api {get} /api/humansgood/
+ * @apiName humansgood
+ * @apiGroup Fun
  * @apiParam {String} text Text to use.
+ * @apiUse Error
+ * @apiUse auth
  */
 app.get("/humansgood", async (req, res) => {
   const text = req.query.text;
