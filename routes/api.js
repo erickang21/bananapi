@@ -19,15 +19,15 @@ const superagent = require("superagent");
  * @apiErrorExample {json} Error-Response:
  *     HTTP/1.1 4xx Client Error
  *     {
- *       "message": "Some hopefully helpful error message of what happened."
+ *       "message": "An error message of what happened."
  *     }
  */
 
 /**
  * @api {get} /api/humansgood/
  * @apiName humansgood
- * @apiGroup Fun
- * @apiParam {String} text Text to use.
+ * @apiGroup Image
+ * @apiParam {String} text Text to use (Limit of 32 characters.)
  * @apiUse Error
  * @apiUse auth
  */
@@ -45,6 +45,29 @@ app.get("/humansgood", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/peek/
+ * @apiName peek
+ * @apiGroup Image
+ * @apiParam {String} url Image URL to add to the picture.
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/peek", async (req, res) => {
   const imageUrl = req.query.url || req.query.image || req.query.imageURL;
   if (!imageUrl) return res.sendStatus(400, { message: "No image URL was provided." });
@@ -57,6 +80,29 @@ app.get("/peek", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/autism/
+ * @apiName autism
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. (Limit of 40 characters.)
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/autism", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -71,6 +117,29 @@ app.get("/autism", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/8ball/
+ * @apiName 8ball
+ * @apiGroup Text
+ * @apiParam {String} question Question to ask the 8 Ball.
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/8ball", (req, res) => {
   const query = req.query.question;
   if (!query) return res.sendStatus(400, { message: "No question provided." });
@@ -88,6 +157,29 @@ app.get("/8ball", (req, res) => {
   res.send({ question: query, response: choice, type: type });
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/trumptweet/
+ * @apiName trumptweet
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. (Limit of 240 characters.)
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/trumptweet", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -102,6 +194,29 @@ app.get("/trumptweet", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/headache/
+ * @apiName headache
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. (Limit of 25 characters.)
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/headache", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -116,6 +231,29 @@ app.get("/headache", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/legends/
+ * @apiName legends
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. (Limit of 11 characters.)
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/legends", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -130,6 +268,29 @@ app.get("/legends", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/disabled/
+ * @apiName disabled
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. (A limit has not yet been enforced, but it will look ugly if the text is too long. Please test by yourself until we can fix this.)
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/disabled", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -143,6 +304,29 @@ app.get("/disabled", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/sleeptight/
+ * @apiName sleeptight
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. (A limit has not yet been enforced, but it will look ugly if the text is too long. Please test by yourself until we can fix this.)
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/sleeptight", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -156,6 +340,29 @@ app.get("/sleeptight", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/abandon/
+ * @apiName abandon
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. (A limit has not yet been enforced, but it will look ugly if the text is too long. Please test by yourself until we can fix this.)
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/abandon", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -169,12 +376,58 @@ app.get("/abandon", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/abandon/
+ * @apiName abandon
+ * @apiGroup Text
+ * @apiParam {String} text Text to be reversed.
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/reverse", (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
   res.send({ text: text.split("").reverse().join("") });
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/alert/
+ * @apiName alert
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. (A limit has not yet been enforced, but it will look ugly if the text is too long. Please test by yourself until we can fix this.)
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/alert", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -188,6 +441,31 @@ app.get("/alert", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/hash/
+ * @apiName hash
+ * @apiGroup Text
+ * @apiParam {String} text Text to transform into a hash.
+ * @apiUse Error
+ * @apiUse auth
+ * @apiSuccess {String} text The text that was sent in the parameters.
+ * @apiSuccess {String} hash The resulting hash that was created.
+ */
 app.get("/hash", (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
@@ -195,6 +473,31 @@ app.get("/hash", (req, res) => {
   res.send({ text: text, hash: hash });
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/jsify/
+ * @apiName jsify
+ * @apiGroup Text
+ * @apiParam {String} text Text to transform into JavaScript-style.
+ * @apiUse Error
+ * @apiUse auth
+ * @apiSuccess {String} text The text that was sent in the parameters.
+ * @apiSuccess {String} hash The resulting JSIf-ied text.
+ */
 app.get("/jsify", (req, res) => {
   const { text } = req.query;
   if(!text) return res.sendStatus(400, "Missing text");
