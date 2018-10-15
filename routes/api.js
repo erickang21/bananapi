@@ -6,6 +6,7 @@ const { Canvas } = require("canvas-constructor");
 const jsify = require("../jsify.js");
 const fs = require("fs").promises;
 const crypto = require("crypto");
+const superagent = require("superagent");
 /**
  * @api {get} /api/humansgood/
  * @apiParam {String} text Text to use.
@@ -20,6 +21,20 @@ app.get("/humansgood", async (req, res) => {
     .setTextFont("24px Arial")
     .setTextAlign("left")
     .addMultilineText(text, 525, 780, 140, 30)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
+app.get("/peek", async (req, res) => {
+  const imageUrl = req.query.url || req.query.image || req.query.imageURL;
+  if (!imageUrl) return res.sendStatus(400, { message: "No image URL was provided." });
+  const image = await fs.readFile(`${process.cwd()}/assets/peek.jpg`);
+  let imgToAdd;
+  superagent.get(imageUrl)
+    .then((resp) => imgToAdd = resp.body);
+  const buff = await new Canvas(320, 320)
+    .addImage(image, 0, 0, 320, 320)
+    .addImage(imgToAdd, 0, 160, 160, 160)
     .toBufferAsync();
   res.send(buff, { "Content-Type": "image/png" }); 
 });
