@@ -82,6 +82,13 @@ app.get("/examples", async (req, res) => {
   });
 });
 
+app.get("/libs", async (req, res) => {
+  const markdown = await fs.readFile("./markdown/libs.md");
+  res.render("libs.ejs", {
+    code: md.render(markdown.toString())
+  });
+});
+
 app.listen(3000, (err) => {
   if(err) throw err;
   // eslint-disable-next-line no-console
