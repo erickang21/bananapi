@@ -45,6 +45,20 @@ app.get("/humansgood", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+app.get("/spit", async (req, res) => {
+  const firstImage = req.query.firstUrl || req.query.firstImage;
+  const secondImage = req.query.secondUrl || req.query.secondImage;
+  const image = await fs.readFile(`${process.cwd()}/assets/spit.jpg`);
+  const img1 = await superagent.get(firstImage);
+  const img2 = await superagent.get(secondImage);
+  const buff = await new Canvas(497, 378)
+    .addImage(image, 0, 0, 497, 378)
+    .addImage(img1.body, 0, 0, 252, 190)
+    .addImage(img2.body, 0, 190, 252, 190)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
