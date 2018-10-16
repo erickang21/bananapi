@@ -40,18 +40,3 @@ const { Attachment, MessageAttachment } = require("discord.js");
 const image = await api.disabled("something");
 message.channel.send(new MessageAttachment(image, "file.png"));
 ```
-
-__**Usage Example with TypeScript**__
-
-```ts
-import { Client } from "bananapi";
- 
-const client: Client = new Client({ token: "my token" });
- 
-client.reverse("TypeScript")
-  .then((reversed: string) => {
-    console.log(reversed); // => tpircSepyT
-  });```
-
-__**License**__
-MIT
