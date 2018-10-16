@@ -45,6 +45,30 @@ app.get("/humansgood", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/spit/
+ * @apiName spit
+ * @apiGroup Image
+ * @apiParam {String} firstImage The first image to use.
+ * @apiParam {String} secondImage The second image to use.
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/spit", async (req, res) => {
   const firstImage = req.query.firstUrl || req.query.firstImage;
   const secondImage = req.query.secondUrl || req.query.secondImage;
