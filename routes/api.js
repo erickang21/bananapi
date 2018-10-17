@@ -45,6 +45,29 @@ app.get("/humansgood", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/retarded/
+ * @apiName retarded
+ * @apiGroup Image
+ * @apiParam {String} image URL of the image to use.
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/retarded", async (req, res) => {
   const img = req.query.image || req.query.url;
   if (!img) return res.sendStatus(400, { message: "No image provided." });
