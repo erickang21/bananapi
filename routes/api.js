@@ -45,6 +45,18 @@ app.get("/humansgood", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+app.get("/retarded", async (req, res) => {
+  const img = req.query.image || req.query.url;
+  if (!img) return res.sendStatus(400, { message: "No image provided." });
+  const image = await fs.readFile(`${process.cwd()}/assets/retarded.jpg`);
+  const img1 = await superagent.get(img);
+  const buff = await new Canvas(640, 640)
+    .addImage(image, 0, 0, 640, 640)
+    .addImage(img1.body, 320, 0, 320, 320)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
