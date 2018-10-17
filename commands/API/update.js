@@ -13,9 +13,9 @@ class Update extends Command {
 
   async run(msg) {
     let message;
-    const { stdout, stderr } = await exec("git pull");
+    const { stdout, stderr } = await exec("git pull && apidoc -i routes -o docs");
     if (stdout) {
-      message = `The bot and API was updated. Continuing to restart...\n\nLogs:\n\`\`\`${stdout}\`\`\``;
+      message = `The bot, API, website, and docs were all updated. Continuing to restart...\n\nLogs:\n\`\`\`${stdout}\`\`\``;
       await msg.send(message);
       process.exit();
     } else {
