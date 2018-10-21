@@ -6,7 +6,7 @@ class Alert extends Command {
   constructor(...args) {
     super(...args, {
       description: "Example command for GET /api/abandon",
-      name: "abandon",
+      name: "alert",
       usage: "[text:str]"
     });
   }
