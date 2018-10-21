@@ -5,7 +5,7 @@ const superagent = require("superagent");
 class Alert extends Command {
   constructor(...args) {
     super(...args, {
-      description: "Example command for GET /api/abandon",
+      description: "Example command for GET /api/alert",
       name: "alert",
       usage: "[text:str]"
     });

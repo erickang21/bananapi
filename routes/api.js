@@ -465,8 +465,8 @@ app.get("/abandon", async (req, res) => {
  */
 
 /**
- * @api {get} /api/abandon/
- * @apiName abandon
+ * @api {get} /api/reverse/
+ * @apiName reverse
  * @apiGroup Text
  * @apiParam {String} text Text to be reversed.
  * @apiUse Error
