@@ -59,7 +59,7 @@ app.use("/api", (req, res, next) => {
 });
 
 const handler = new RLHandler();
-app.use("/api", handler.handle);
+app.use("/api", handler.handle.bind(handler));
 
 mountRoutes(app);
 
