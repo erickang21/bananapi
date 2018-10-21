@@ -1,7 +1,7 @@
 const polka = require("polka");
 const send = require("@polka/send-type");
 const path = require("path");
-
+const RLHandler = require("./routes/ratelimits.js");
 const app = polka({
   onNoMatch: (_, res) => res.render("404.ejs")
 });
@@ -57,6 +57,9 @@ app.use("/api", (req, res, next) => {
     return next(); // Query returned results so we know token is right
   });
 });
+
+const handler = new RLHandler();
+app.use("/api", handler.handle);
 
 mountRoutes(app);
 
