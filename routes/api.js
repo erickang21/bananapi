@@ -507,9 +507,9 @@ app.get("/alert", async (req, res) => {
   const image = await fs.readFile(`${process.cwd()}/assets/alert_template.jpg`);
   const buff = await new Canvas(906, 608)
     .addImage(image, 0, 0, 906, 608)
-    .setTextFont("24px Arial")
+    .setTextFont("34px Arial")
     .setTextAlign("left")
-    .addMultilineText(text, 75, 400, 850, 30)
+    .addMultilineText(text, 60, 400, 850, 30)
     .toBufferAsync();
   res.send(buff, { "Content-Type": "image/png" }); 
 });
