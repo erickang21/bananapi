@@ -31,7 +31,7 @@ const BananAPIClient = require("./bot.js");
 const client = new BananAPIClient(app);
 client.login();
 
-app.bot = client;
+app.client = client;
 
 app.db.connect();
 app.cache = {};
