@@ -28,7 +28,7 @@ app.db = new Pool({
 
 const BananAPIClient = require("./bot.js");
 
-const client = new BananAPIClient();
+const client = new BananAPIClient(app);
 client.login();
 
 app.bot = client;
