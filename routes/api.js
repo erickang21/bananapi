@@ -413,9 +413,28 @@ app.get("/sleeptight", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/stayawake/
+ * @apiName stayawake
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. Limit of 105 characters.
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/stayawake", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 105) return res.sendStatus(400, { message: "Text must be less than 105 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/stayawake.jpg`);
   const buff = await new Canvas(1439, 1359)
     .addImage(image, 0, 0, 1439, 1359)
