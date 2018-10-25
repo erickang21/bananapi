@@ -446,6 +446,38 @@ app.get("/stayawake", async (req, res) => {
 });
 
 /**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/hurt/
+ * @apiName hurt
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. Limit of 60 characters.
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("/hurt", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 60) return res.sendStatus(400, { message: "Text must be less than 60 characters." });
+  const image = await fs.readFile(`${process.cwd()}/assets/hurt.jpg`);
+  const buff = await new Canvas(521, 501)
+    .addImage(image, 0, 0, 521, 501)
+    .setTextFont("24px Arial")
+    .setTextAlign("left")
+    .addMultilineText("ee eee e e ee e e e ee e e  e ee e  e e e e  e e e e e e  e", 10, 270, 240, 20)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
+/**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
  */
