@@ -413,6 +413,19 @@ app.get("/sleeptight", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+app.get("/stayawake", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  const image = await fs.readFile(`${process.cwd()}/assets/stayawake.jpg`);
+  const buff = await new Canvas(1439, 1359)
+    .addImage(image, 0, 0, 1439, 1359)
+    .setTextFont("48px Arial")
+    .setTextAlign("left")
+    .addMultilineText(text, 30, 750, 600, 50)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
