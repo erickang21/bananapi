@@ -6,14 +6,15 @@ class peek extends Command {
   constructor(...args) {
     super(...args, {
       description: "Example command for GET /api/peek",
-      usage: "[text:str]"
+      usage: "[user:user]"
     });
   }
 
-  async run(msg, [text]) {
+  async run(msg, [user]) {
+    const user = user || msg.author;
     const start = Date.now();
     const res = await superagent.get("https://bananapi.ml/api/peek")
-      .query({ text: text }) // Params
+      .query({ text: user.displayAvatarURL({ size: 2048 } ) })
       .set({ Authorization: this.client.config.apikey });
     const end = Date.now();
     const attachment = new MessageAttachment(res.body, "peek.png");
