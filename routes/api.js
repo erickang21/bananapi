@@ -45,6 +45,8 @@ app.get("/humansgood", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
+
+
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
@@ -79,6 +81,13 @@ app.get("/retarded", async (req, res) => {
     .toBufferAsync();
   res.send(buff, { "Content-Type": "image/png" }); 
 });
+
+app.get("mock", async (req, res ) => {
+  const text = req.query.text;
+  if (!text) return res.sendStatus(400, { messags: "No text provided." })
+  const newText = text.split("").reduce((v, c, i) => v += c[(i % 2) ? "toLowerCase" : "toUpperCase"]());
+  res.json({ text: newText });
+})
 
 /**
  * @apiDefine auth
