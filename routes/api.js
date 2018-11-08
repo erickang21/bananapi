@@ -46,6 +46,43 @@ app.get("/humansgood", async (req, res) => {
 });
 
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/note/
+ * @apiName note
+ * @apiGroup Image
+ * @apiParam {String} text Text to use (Limit of 26 characters.)
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("/note", async (req, res) => {
+  const image = await fs.readFile(`${process.cwd()}/assets/note.jpg`);
+  const text = req.query.text;
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 32) return res.sendStatus(400, { message: "Text must be less than 26 characters." });
+  const buff = await new Canvas(720, 676)
+    .addImage(image, 0, 0, 720, 676)
+    .setTextFont("24px Arial")
+    .setTextAlign("left")
+    .addMultilineText(text, 400, 455, 140, 30)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
 
 /**
  * @apiDefine auth
