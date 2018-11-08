@@ -82,12 +82,36 @@ app.get("/retarded", async (req, res) => {
   res.send(buff, { "Content-Type": "image/png" }); 
 });
 
-app.get("mock", async (req, res ) => {
+
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/mock/
+ * @apiName mock
+ * @apiGroup Text
+ * @apiParam {String} text Text to use.
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("mock", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { messags: "No text provided." })
-  const newText = text.split("").reduce((v, c, i) => v += c[(i % 2) ? "toLowerCase" : "toUpperCase"]());
+  if (!text) return res.sendStatus(400, { messags: "No text provided." });
+  const newText = text.split("").reduce((v, c, i) => v += c[i % 2 ? "toLowerCase" : "toUpperCase"]());
   res.json({ text: newText });
-})
+});
 
 /**
  * @apiDefine auth
