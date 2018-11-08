@@ -6,14 +6,16 @@ class retarded extends Command {
   constructor(...args) {
     super(...args, {
       description: "Example command for GET /api/retarded",
-      usage: "[text:str]"
+      usage: "[user:user]"
     });
   }
 
-  async run(msg, [text]) {
+  async run(msg, [user]) {
+    const member = user || msg.author;
+    const url = member.displayAvatarURL({ size: 2048 });
     const start = Date.now();
     const res = await superagent.get("https://bananapi.ml/api/retarded")
-      .query({ text: text }) // Params
+      .query({ url: url }) // Params
       .set({ Authorization: this.client.config.apikey });
     const end = Date.now();
     const attachment = new MessageAttachment(res.body, "retarded.png");
