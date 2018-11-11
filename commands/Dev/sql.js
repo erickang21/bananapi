@@ -20,7 +20,7 @@ class SQL extends Command {
     if (!res.rows.length) message += "Empty response.";
 
     else {
-      for (const row of res.rows) message += `${row.toString()}\n`;
+      for (let i = 0; i < res.rows.length; i++) message += `${res.rows[i]}\n`;
     }
     message += "```\n\n";
     message += `:stopwatch: ${after - before} ms`;
