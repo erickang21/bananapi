@@ -25,7 +25,7 @@ class SQL extends Command {
     }
     message += "\n\n";
     message += `:stopwatch: ${after - before} ms`;
-    await msg.send(message, { split: "\n" });
+    await msg.send(message, { code: true, split: "\n" });
     
   }
 }
