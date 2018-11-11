@@ -13,6 +13,7 @@ class SQL extends Command {
 
   async run(msg, [query]) {   
     let message;
+    message += `**Query**\n\`${query}\`\n`;
     const before = Date.now();
     const res = await this.client.db.query(query);
     const after = Date.now();
