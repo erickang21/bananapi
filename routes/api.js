@@ -3,8 +3,9 @@ const polka = require("polka");
 const app = polka();
 
 const { Canvas } = require("canvas-constructor");
-const jsify = require("../jsify.js");
 const fs = require("fs").promises;
+const jsify = require("../jsify.js");
+
 const crypto = require("crypto");
 const superagent = require("superagent");
 
@@ -41,6 +42,43 @@ app.get("/humansgood", async (req, res) => {
     .setTextFont("24px Arial")
     .setTextAlign("left")
     .addMultilineText(text, 525, 780, 140, 30)
+    .toBufferAsync();
+  res.send(buff, { "Content-Type": "image/png" }); 
+});
+
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/scroll/
+ * @apiName scroll
+ * @apiGroup Image
+ * @apiParam {String} text Text to use (Limit of 40 characters.)
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("/scroll", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (text.length > 40) return res.sendStatus(400, { message: "Text must be less than 40 characters." });
+  const image = await fs.readFile(`${process.cwd()}/assets/scroll.jpg`);
+  const buff = await new Canvas(480, 480)
+    .addImage(image, 0, 0, 480, 480)
+    .setTextFont("20px Arial")
+    .setTextAlign("left")
+    .addMultilineText(text, 80, 300, 80, 20)
     .toBufferAsync();
   res.send(buff, { "Content-Type": "image/png" }); 
 });
