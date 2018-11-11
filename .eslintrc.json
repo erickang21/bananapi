@@ -16,7 +16,6 @@
         "SwitchCase": 1
       }
     ],
-    "no-extra-parens": ["error", "all"],
     "no-template-curly-in-string": "error",
     "no-var": "error",
     "prefer-const": ["error", {

@@ -40,3 +40,21 @@ const { Attachment, MessageAttachment } = require("discord.js");
 const image = await api.disabled("something");
 message.channel.send(new MessageAttachment(image, "file.png"));
 ```
+
+ # Python
+
+**Install with PIP:**
+`pip install bananapy`
+
+**Link to PyPi:**
+[https://pypi.org/project/BananaPY/](https://pypi.org/project/BananaPY/)
+
+__**Usage Example**__
+
+```py
+import bananapy
+
+client = bananapy.Client("token")
+# Using abandon endpoint
+await client.abandon("I love fortnite") # returns the Buffer
+```
