@@ -53,7 +53,7 @@ passport.deserializeUser((user, done) => done(null, user));
 passport.use(new Discord.Strategy({
   clientID: 496455297959985167,
   clientSecret: config.secret,
-  callbackURL: "https://callback.com/login",
+  callbackURL: "https://bananapi.ml/login",
   scope: ["identify"]
 }, (_, __, profile, done) => {
   process.nextTick(() => {
