@@ -1,5 +1,4 @@
 const { Event } = require("klasa");
-const { MessageEmbed } = require("discord js");
 
 class GuildMemberRemove extends Event {
 
