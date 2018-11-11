@@ -17,10 +17,10 @@ class SQL extends Command {
     const res = await this.client.db.query(query);
     const after = Date.now();
     message += "```";
-    if (!res.rows.length) message = "Empty response.";
+    if (!res.rows.length) message += "Empty response.";
 
     else {
-      for (const row of res.rows) message += `${row}\n`;
+      for (const row of res.rows) message += `${row.toString()}\n`;
     }
     message += "```\n\n";
     message += `:stopwatch: ${after - before} ms`;
