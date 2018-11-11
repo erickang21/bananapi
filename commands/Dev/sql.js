@@ -12,7 +12,7 @@ class SQL extends Command {
   }
 
   async run(msg, [query]) {   
-    let message;
+    let message = "";
     message += `**Query**\n\`${query}\`\n`;
     const before = Date.now();
     const res = await this.client.db.query(query);
@@ -21,7 +21,7 @@ class SQL extends Command {
     if (!res.rows.length) message += "Empty response.";
 
     else {
-      for (let i = 0; i < res.rows.length; i++) message += `${res.rows[i]}\n`;
+      message += JSON.stringify(res.rows, null, 2);
     }
     message += "```\n\n";
     message += `:stopwatch: ${after - before} ms`;
