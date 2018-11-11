@@ -9,6 +9,58 @@ const jsify = require("../jsify.js");
 const crypto = require("crypto");
 const superagent = require("superagent");
 
+const range = (num) => Array.from(Array(num).keys());
+
+function createStar(text) {
+  let star = "";
+  const middle = text.length - 1;
+  for (const i of range(text.length * 2 - 1)) {
+    if (middle === i) {
+      star += `${text.slice(0, text.length - 1)}${text.slice(1)}\n`;
+    } else {
+      const splits = text.split("");
+      const c = Math.abs(middle - i);
+      star += " ".repeat(middle - c);
+      star += splits[c];
+      star += " ".repeat(c - 1);
+      star += splits[c];
+      star += " ".repeat(c - 1);
+      star += splits[c];
+      star += "\n";
+    }
+  }
+  return star;
+}
+
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/star/
+ * @apiName star
+ * @apiGroup Text
+ * @apiParam {String} text Text to use
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("/star", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  res.send({ text: createStar(text) }, { "Content-Type": "json" }); 
+});
+
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
