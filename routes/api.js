@@ -16,7 +16,7 @@ function createStar(text) {
   const middle = text.length - 1;
   for (const i of range(text.length * 2 - 1)) {
     if (middle === i) {
-      star += `${text.slice(0, text.length - 1)}${text.slice(1)}\n`;
+      star += `${text.split("").reverse().join("")}${text.slice(1)}\n`;
     } else {
       const splits = text.split("");
       const c = Math.abs(middle - i);
