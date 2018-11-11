@@ -2,6 +2,10 @@ const polka = require("polka");
 const send = require("@polka/send-type");
 const path = require("path");
 const RLHandler = require("./routes/ratelimits.js");
+const passport = require("passport");
+const Discord = require("passport-discord");
+const session = require("express-session");
+const LevelSessionStore = require("level-session-store")(session);
 const app = polka({
   onNoMatch: (_, res) => res.render("404.ejs")
 });
@@ -43,6 +47,30 @@ app.use((req, res, next) => {
 });
 
 app.use(ejs());
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
+passport.use(new Discord.Strategy({
+  clientID: 496455297959985167,
+  clientSecret: config.secret,
+  callbackURL: "https://callback.com/login",
+  scope: ["identify"]
+}, (_, __, profile, done) => {
+  process.nextTick(() => {
+    return done(null, profile);
+  });
+}));
+app.use(session({
+  cookie: {
+    maxAge: 31536000000
+  },
+  secret: "secret",
+  saveUninitialized: true,
+  resave: true,
+  store: new LevelSessionStore()
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api", (req, res, next) => {
   const auth = req.headers["authorization"]; // Get Header
@@ -94,6 +122,15 @@ app.get("/libs", async (req, res) => {
   res.render("libs.ejs", {
     code: md.render(markdown.toString())
   });
+});
+
+app.get("/login", passport.authenticate("discord", {
+  failureRedirect: "/"
+}), (req, res) => res.redirect(req.session.last || "/"));
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
 });
 
 app.listen(3000, (err) => {
