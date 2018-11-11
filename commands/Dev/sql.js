@@ -1,4 +1,4 @@
-const { Command } = require("klasa");
+const { Command, util: { codeBlock } } = require("klasa");
 
 
 class SQL extends Command {
@@ -17,15 +17,15 @@ class SQL extends Command {
     const before = Date.now();
     const res = await this.client.db.query(query);
     const after = Date.now();
-    message += "```";
+    //message += "```";
     if (!res.rows.length) message += "Empty response.";
 
     else {
-      message += JSON.stringify(res.rows, null, 2);
+      message += codeBlock("", JSON.stringify(res.rows, null, 2));
     }
-    message += "```\n\n";
+    message += "\n\n";
     message += `:stopwatch: ${after - before} ms`;
-    await msg.send(message);
+    await msg.send(message, { split: "\n" });
     
   }
 }
