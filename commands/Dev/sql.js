@@ -16,8 +16,14 @@ class SQL extends Command {
     const before = Date.now();
     const res = await this.client.db.query(query);
     const after = Date.now();
+    message += "```";
     if (!res.rows.length) message = "Empty response.";
-    else message = `\`\`\`${res}\`\`\`\n\n:stopwatch: ${after - before} ms`;
+
+    else {
+      for (const row of res.rows) message += `${row}\n`;
+    }
+    message += "```\n\n";
+    message = `:stopwatch: ${after - before} ms`;
     await msg.send(message);
     
   }
