@@ -23,7 +23,7 @@ class SQL extends Command {
       for (const row of res.rows) message += `${row}\n`;
     }
     message += "```\n\n";
-    message = `:stopwatch: ${after - before} ms`;
+    message += `:stopwatch: ${after - before} ms`;
     await msg.send(message);
     
   }
