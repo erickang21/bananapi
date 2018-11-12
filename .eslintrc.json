@@ -62,7 +62,7 @@
     "no-buffer-constructor": "error",
     "wrap-iife": ["error", "inside"],
     "no-path-concat": "error",
-    "no-sync": ["error", {
+    "no-sync": ["off", {
       "allowAtRootLevel": true
     }],
     "brace-style": ["error", "1tbs", {

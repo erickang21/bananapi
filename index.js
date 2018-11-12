@@ -35,10 +35,11 @@ const BananAPIClient = require("./bot.js");
 
 const client = new BananAPIClient(app);
 client.login();
-
+console.log("Client logged in.");
 app.client = client;
 
 app.db.connect();
+console.log("Connected to PSQL DB.");
 app.cache = {};
 
 app.use((req, res, next) => {
@@ -50,7 +51,9 @@ app.use((req, res, next) => {
 app.use(ejs());
 
 passport.serializeUser((user, done) => done(null, user));
+console.log("Serialized user.");
 passport.deserializeUser((user, done) => done(null, user));
+console.log("Deserialized uesr.");
 passport.use(new Discord.Strategy({
   clientID: 496455297959985167,
   clientSecret: config.secret,
@@ -61,6 +64,7 @@ passport.use(new Discord.Strategy({
     return done(null, profile);
   });
 }));
+console.log("Session");
 app.use(session({
   cookie: {
     maxAge: 31536000000
@@ -75,7 +79,7 @@ app.use(passport.session());
 // Body parser
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: false }));
-
+console.log("Parse data");
 app.use("/api", (req, res, next) => {
   const auth = req.headers["authorization"]; // Get Header
   if(!auth) return res.sendStatus(401, "Unauthorized"); // If they didn't provide
