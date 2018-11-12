@@ -632,7 +632,7 @@ app.get("/hurt", async (req, res) => {
     .addImage(image, 0, 0, 521, 501)
     .setTextFont("24px Arial")
     .setTextAlign("left")
-    .addMultilineText("ee eee e e ee e e e ee e e  e ee e  e e e e  e e e e e e  e", 10, 270, 240, 20)
+    .addMultilineText(text, 10, 270, 240, 20)
     .toBufferAsync();
   res.send(buff, { "Content-Type": "image/png" }); 
 });
