@@ -5,6 +5,7 @@ const RLHandler = require("./routes/ratelimits.js");
 const passport = require("passport");
 const Discord = require("passport-discord");
 const session = require("express-session");
+const bp = require("body-parser");
 const LevelSessionStore = require("level-session-store")(session);
 const app = polka({
   onNoMatch: (_, res) => res.render("404.ejs")
@@ -71,6 +72,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+// Body parser
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: false }));
 
 app.use("/api", (req, res, next) => {
   const auth = req.headers["authorization"]; // Get Header
