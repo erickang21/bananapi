@@ -35,11 +35,13 @@ const BananAPIClient = require("./bot.js");
 
 const client = new BananAPIClient(app);
 client.login();
-console.log("Client logged in.");
-app.client = client;
+client.on("ready", () => {
+  client.console.log("Client logged in.");
+});
 
+app.client = client;
 app.db.connect();
-console.log("Connected to PSQL DB.");
+client.console.log("Connected to PSQL DB.");
 app.cache = {};
 
 app.use((req, res, next) => {
@@ -51,9 +53,7 @@ app.use((req, res, next) => {
 app.use(ejs());
 
 passport.serializeUser((user, done) => done(null, user));
-console.log("Serialized user.");
 passport.deserializeUser((user, done) => done(null, user));
-console.log("Deserialized uesr.");
 passport.use(new Discord.Strategy({
   clientID: 496455297959985167,
   clientSecret: config.secret,
@@ -64,7 +64,6 @@ passport.use(new Discord.Strategy({
     return done(null, profile);
   });
 }));
-console.log("Session");
 app.use(session({
   cookie: {
     maxAge: 31536000000
@@ -79,7 +78,6 @@ app.use(passport.session());
 // Body parser
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: false }));
-console.log("Parse data");
 app.use("/api", (req, res, next) => {
   const auth = req.headers["authorization"]; // Get Header
   if(!auth) return res.sendStatus(401, "Unauthorized"); // If they didn't provide
@@ -107,7 +105,9 @@ mountRoutes(app);
 app.get("/", async (req, res) => {
   const dbCount = await app.db.query("SELECT COUNT(*) FROM tokens");
   const users = dbCount.rows[0].count;
-  res.render("index.ejs", { count: users, bananapfp: app.client.users.get("277981712989028353").displayAvatarURL({ format: "png", size: 2048 }), tntpfp: app.client.users.get("292690616285134850").displayAvatarURL({ size: 2048 }) });
+  res.render("index.ejs", {
+    authorized: req.isAuthorized(), count: users, bananapfp: app.client.users.get("277981712989028353").displayAvatarURL({ format: "png", size: 2048 }), tntpfp: app.client.users.get("292690616285134850").displayAvatarURL({ size: 2048 })
+  });
 });
 
 app.get("/ping", (req, res) => {
@@ -134,7 +134,7 @@ app.get("/libs", async (req, res) => {
 
 app.get("/login", passport.authenticate("discord", {
   failureRedirect: "/"
-}), (req, res) => res.redirect(req.session.last || "/"));
+}), (req, res) => res.redirect("/"));
 
 app.get("/logout", (req, res) => {
   req.logout();

@@ -14,7 +14,7 @@ const range = (num) => Array.from(Array(num).keys());
 function createStar(text) {
   let star = "";
   const middle = text.length - 1;
-  for (const i of range(text.length * 2 - 1)) {
+  for (const i of range((text.length * 2)) - 1) {
     if (middle === i) {
       star += `${text.split("").reverse().join("")}${text.slice(1)}\n`;
     } else {

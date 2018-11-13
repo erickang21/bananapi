@@ -1,3 +1,4 @@
+const api = require("./api.js");
 
 module.exports = (app) => app
-  .use("/api", require("./api.js"));
+  .use("/api", api);
