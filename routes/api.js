@@ -57,8 +57,8 @@ function createStar(text) {
  */
 app.get("/star", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  res.send({ text: createStar(text) }, { "Content-Type": "json" }); 
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  res.json({ text: createStar(text) }); 
 });
 
 /**
@@ -86,8 +86,8 @@ app.get("/star", async (req, res) => {
  */
 app.get("/humansgood", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 32) return res.sendStatus(400, { message: "Text must be less than 32 characters." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 32) return res.status(400).json({ message: "Text must be less than 32 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/humansgood.jpg`);
   const buff = await new Canvas(930, 928)
     .addImage(image, 0, 0, 930, 928)
@@ -95,7 +95,7 @@ app.get("/humansgood", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 525, 780, 140, 30)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.send(buff); 
 });
 
 /**
@@ -123,8 +123,8 @@ app.get("/humansgood", async (req, res) => {
  */
 app.get("/scroll", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 40) return res.sendStatus(400, { message: "Text must be less than 40 characters." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 40) return res.status(400).json({ message: "Text must be less than 40 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/scroll.jpg`);
   const buff = await new Canvas(480, 480)
     .addImage(image, 0, 0, 480, 480)
@@ -162,8 +162,8 @@ app.get("/scroll", async (req, res) => {
 app.get("/note", async (req, res) => {
   const image = await fs.readFile(`${process.cwd()}/assets/note.jpg`);
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 32) return res.sendStatus(400, { message: "Text must be less than 26 characters." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 32) return res.status(400).json({ message: "Text must be less than 26 characters." });
   const buff = await new Canvas(720, 676)
     .addImage(image, 0, 0, 720, 676)
     .setTextFont("24px Arial")
@@ -199,14 +199,15 @@ app.get("/note", async (req, res) => {
  */
 app.get("/retarded", async (req, res) => {
   const img = req.query.image || req.query.url;
-  if (!img) return res.sendStatus(400, { message: "No image provided." });
+  if (!img) return res.status(400).json({ message: "No image provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/retarded.jpg`);
   const img1 = await superagent.get(img);
   const buff = await new Canvas(640, 640)
     .addImage(image, 0, 0, 640, 640)
     .addImage(img1.body, 320, 0, 320, 320)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 
@@ -235,7 +236,7 @@ app.get("/retarded", async (req, res) => {
  */
 app.get("mock", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { messags: "No text provided." });
+  if (!text) return res.status(400).send({ messags: "No text provided." });
   const newText = text.split("").reduce((v, c, i) => v += c[i % 2 ? "toLowerCase" : "toUpperCase"]());
   res.json({ text: newText });
 });
@@ -275,7 +276,8 @@ app.get("/spit", async (req, res) => {
     .addImage(img1.body, 0, 0, 252, 190)
     .addImage(img2.body, 0, 190, 252, 190)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 /**
@@ -303,14 +305,15 @@ app.get("/spit", async (req, res) => {
  */
 app.get("/peek", async (req, res) => {
   const imageUrl = req.query.url || req.query.image || req.query.imageURL;
-  if (!imageUrl) return res.sendStatus(400, { message: "No image URL was provided." });
+  if (!imageUrl) return res.status(400).json({ message: "No image URL was provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/peek.jpg`);
   const resp = await superagent.get(imageUrl);
   const buff = await new Canvas(320, 320)
     .addImage(image, 0, 0, 320, 320)
     .addImage(resp.body, 0, 160, 160, 160)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff);
 });
 
 /**
@@ -338,8 +341,8 @@ app.get("/peek", async (req, res) => {
  */
 app.get("/autism", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 40) return res.sendStatus(400, { message: "Text must be less than 40 characters." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 40) return res.status(400).json({ message: "Text must be less than 40 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/autism.jpg`);
   const buff = await new Canvas(640, 852)
     .addImage(image, 0, 0, 640, 852)
@@ -347,7 +350,8 @@ app.get("/autism", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 250, 370, 250, 30)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 /**
@@ -375,7 +379,7 @@ app.get("/autism", async (req, res) => {
  */
 app.get("/8ball", (req, res) => {
   const query = req.query.question;
-  if (!query) return res.sendStatus(400, { message: "No question provided." });
+  if (!query) return res.status(400).json({ message: "No question provided." });
   const answers = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes, definitely.", "You may rely on it.", "As I see it, yes.", "Most likely.", " Outlook good.", "Yes.", "Signs point to yes.", "Reply hazy, try again.", "Ask again later.", "Better not tell you now.", "Cannot predict now.", "Concentrate and ask again.", "Do not count on it.", "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."];
   const index = Math.floor(Math.random() * answers.length);
   const choice = answers[index];
@@ -387,7 +391,7 @@ app.get("/8ball", (req, res) => {
   } else {
     type = "negative";
   }
-  res.send({ question: query, response: choice, type: type });
+  res.json({ question: query, response: choice, type: type });
 });
 
 /**
@@ -415,8 +419,8 @@ app.get("/8ball", (req, res) => {
  */
 app.get("/trumptweet", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 240) return res.sendStatus(400, { message: "Text must be less than 240 characters." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 240) return res.status(400).json({ message: "Text must be less than 240 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/trumptweet.jpg`);
   const buff = await new Canvas(1200, 628)
     .addImage(image, 0, 0, 1200, 628)
@@ -424,7 +428,8 @@ app.get("/trumptweet", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 30, 200, 1100, 50)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 /**
@@ -452,8 +457,8 @@ app.get("/trumptweet", async (req, res) => {
  */
 app.get("/headache", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 25) return res.sendStatus(400, { message: "Text must be less than 25 characters." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 25) return res.status(400).json({ message: "Text must be less than 25 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/headache.jpg`);
   const buff = await new Canvas(611, 746)
     .addImage(image, 0, 0, 611, 746)
@@ -461,7 +466,8 @@ app.get("/headache", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 350, 450, 200, 40)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff);
 });
 
 /**
@@ -489,8 +495,8 @@ app.get("/headache", async (req, res) => {
  */
 app.get("/legends", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 11) return res.sendStatus(400, { message: "Text is too long. The limit is 11 characters." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 11) return res.status(400).json({ message: "Text is too long. The limit is 11 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/legends.jpg`);
   const buff = await new Canvas(1080, 1460)
     .addImage(image, 0, 0, 1080, 1460)
@@ -498,7 +504,8 @@ app.get("/legends", async (req, res) => {
     .setTextAlign("left")
     .addText(text, 700, 1425)
     .toBufferAsync(); 
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 /**
@@ -526,7 +533,7 @@ app.get("/legends", async (req, res) => {
  */
 app.get("/disabled", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/disabled_template.jpg`);
   const buff = await new Canvas(384, 744)
     .addImage(image, 0, 0, 384, 744)
@@ -534,7 +541,8 @@ app.get("/disabled", async (req, res) => {
     .setTextAlign("left")
     .addText(text, 30, 295)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");  
+  res.send(buff); 
 });
 
 /**
@@ -562,7 +570,7 @@ app.get("/disabled", async (req, res) => {
  */
 app.get("/sleeptight", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/sleeptight_template.jpg`);
   const buff = await new Canvas(680, 684)
     .addImage(image, 0, 0, 680, 684)
@@ -570,7 +578,8 @@ app.get("/sleeptight", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 30, 375, 320, 30)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 /**
@@ -593,8 +602,8 @@ app.get("/sleeptight", async (req, res) => {
  */
 app.get("/stayawake", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 105) return res.sendStatus(400, { message: "Text must be less than 105 characters." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 105) return res.status(400).json({ message: "Text must be less than 105 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/stayawake.jpg`);
   const buff = await new Canvas(1439, 1359)
     .addImage(image, 0, 0, 1439, 1359)
@@ -602,7 +611,8 @@ app.get("/stayawake", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 30, 750, 600, 50)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 /**
@@ -625,8 +635,8 @@ app.get("/stayawake", async (req, res) => {
  */
 app.get("/hurt", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  if (text.length > 60) return res.sendStatus(400, { message: "Text must be less than 60 characters." });
+  if (!text) return res.status(400).send({ message: "No text provided." });
+  if (text.length > 60) return res.status(400).json({ message: "Text must be less than 60 characters." });
   const image = await fs.readFile(`${process.cwd()}/assets/hurt.jpg`);
   const buff = await new Canvas(521, 501)
     .addImage(image, 0, 0, 521, 501)
@@ -634,7 +644,8 @@ app.get("/hurt", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 10, 270, 240, 20)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); // do we remove the content-type stuff  yesk
 });
 
 /**
@@ -662,7 +673,7 @@ app.get("/hurt", async (req, res) => {
  */
 app.get("/abandon", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/abandon_template.jpg`);
   const buff = await new Canvas(764, 768)
     .addImage(image, 0, 0, 764, 768)
@@ -670,7 +681,8 @@ app.get("/abandon", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 50, 450, 300, 20)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 /**
@@ -698,8 +710,8 @@ app.get("/abandon", async (req, res) => {
  */
 app.get("/reverse", (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
-  res.send({ text: text.split("").reverse().join("") });
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  res.json({ text: text.split("").reverse().join("") });
 });
 
 /**
@@ -727,7 +739,7 @@ app.get("/reverse", (req, res) => {
  */
 app.get("/alert", async (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
   const image = await fs.readFile(`${process.cwd()}/assets/alert_template.jpg`);
   const buff = await new Canvas(906, 608)
     .addImage(image, 0, 0, 906, 608)
@@ -735,7 +747,8 @@ app.get("/alert", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 60, 400, 850, 30)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 /**
@@ -765,9 +778,9 @@ app.get("/alert", async (req, res) => {
  */
 app.get("/hash", (req, res) => {
   const text = req.query.text;
-  if (!text) return res.sendStatus(400, { message: "No text provided." });
+  if (!text) return res.status(400).json({ message: "No text provided." });
   const hash = crypto.createHash("md5").update(text).digest("hex");
-  res.send({ text: text, hash: hash });
+  res.json({ text: text, hash: hash });
 });
 
 /**
@@ -797,8 +810,8 @@ app.get("/hash", (req, res) => {
  */
 app.get("/jsify", (req, res) => {
   const { text } = req.query;
-  if(!text) return res.sendStatus(400, "Missing text");
-  return res.send({ text, js: jsify(text) });
+  if(!text) return res.status(400).json({ message: "Missing text." });
+  return res.json({ text, js: jsify(text) });
 });
 
 module.exports = app;

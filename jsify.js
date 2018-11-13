@@ -27,7 +27,7 @@ function finalize(arr) {
   return arr;
 }
 
-const random = a => a[~~(Math.random() * a.length)];
+const random = (a) => a[~~(Math.random() * a.length)];
 
 function jsify(str) {
   const arr = str.split(" ");

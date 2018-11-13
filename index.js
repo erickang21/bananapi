@@ -1,5 +1,4 @@
-const polka = require("polka");
-const send = require("@polka/send-type");
+const express = require("express");
 const path = require("path");
 const RLHandler = require("./routes/ratelimits.js");
 const passport = require("passport");
@@ -7,16 +6,13 @@ const Discord = require("passport-discord");
 const session = require("express-session");
 const bp = require("body-parser");
 const LevelSessionStore = require("level-session-store")(session);
-const app = polka({
-  onNoMatch: (_, res) => res.render("404.ejs")
-});
+const app = express();
 
 const serve = require("serve-static");
 app.use("/docs", serve(path.join(__dirname, "docs"), { index: "index.html" }));
 
 const fs = require("fs").promises;
 const mountRoutes = require("./routes");
-const ejs = require("polka-ejs");
 const { Pool } = require("pg");
 const config = require("./config.json");
 
@@ -43,14 +39,6 @@ app.client = client;
 app.db.connect();
 client.console.log("Connected to PSQL DB.");
 app.cache = {};
-
-app.use((req, res, next) => {
-  res.send = send.bind(null, res, 200);
-  res.sendStatus = send.bind(null, res);
-  next();
-});
-
-app.use(ejs());
 
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
@@ -80,16 +68,16 @@ app.use(bp.json());
 app.use(bp.urlencoded({ extended: false }));
 app.use("/api", (req, res, next) => {
   const auth = req.headers["authorization"]; // Get Header
-  if(!auth) return res.sendStatus(401, "Unauthorized"); // If they didn't provide
+  if(!auth) return res.status(401);
   // If it is already an invalid token cached don't re request db
-  if(app.cache[auth] === false) return res.sendStatus(401, "Unauthorized");
+  if(app.cache[auth] === false) res.status(401);
   // If it cached and valid next() and pass control to other routes
   if(app.cache[auth] === true) return next();
   // No cache = ask Database
   app.db.query("SELECT * FROM tokens WHERE token = $1", [auth]).then((res) => {
     if(!res.rows.length) { // If no results in query
       app.cache[auth] = false; // Recognize this key is invalid if they re request
-      return res.sendStatus(401, "Unauthorized");
+      return res.status(401);
     }
     app.cache[auth] = true; // Cache it for later requests
     return next(); // Query returned results so we know token is right
