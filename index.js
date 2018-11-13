@@ -18,7 +18,7 @@ const fs = require("fs").promises;
 const mountRoutes = require("./routes");
 const { Pool } = require("pg");
 const config = require("./config.json");
-
+console.log(`CLIENT SECRET: ${config.secret}`);
 const md = require("markdown-it")({
   langPrefix: "lang-"
 });
