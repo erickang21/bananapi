@@ -9,7 +9,10 @@ const LevelSessionStore = require("level-session-store")(session);
 const app = express();
 
 const serve = require("serve-static");
-app.use("/docs", serve(path.join(__dirname, "docs"), { index: "index.html" }));
+app.use("/docs", (req, res, next) => {
+  serve(path.join(__dirname, "docs"), { index: "index.html" });
+  next();
+});
 
 const fs = require("fs").promises;
 const mountRoutes = require("./routes");
@@ -52,20 +55,35 @@ passport.use(new Discord.Strategy({
     return done(null, profile);
   });
 }));
-app.use(session({
-  cookie: {
-    maxAge: 31536000000
-  },
-  secret: "secret",
-  saveUninitialized: true,
-  resave: true,
-  store: new LevelSessionStore()
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use((req, res, next) => { 
+  session({
+    cookie: {
+      maxAge: 31536000000
+    },
+    secret: "secret",
+    saveUninitialized: true,
+    resave: true,
+    store: new LevelSessionStore()
+  });
+  next();
+});
+app.use((req, res, next) => {
+  passport.initialize();
+  next();
+});
+app.use((req, res, next) => {
+  passport.session();
+  next();
+});
 // Body parser
-app.use(bp.json());
-app.use(bp.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  bp.json();
+  next();
+});
+app.use((req, res, next) => {
+  bp.urlencoded({ extended: false });
+  next();
+});
 app.use("/api", (req, res, next) => {
   const auth = req.headers["authorization"]; // Get Header
   if(!auth) return res.status(401);
@@ -85,7 +103,10 @@ app.use("/api", (req, res, next) => {
 });
 
 const handler = new RLHandler();
-app.use("/api", handler.handle.bind(handler));
+app.use("/api", (req, res, next) => {
+  handler.handle.bind(handler);
+  next();
+});
 
 mountRoutes(app);
 
