@@ -9,7 +9,7 @@
     "ecmaVersion": 2018
   },
   "rules": {
-    "indent": [
+    "indent": [ 
       "error",
       2,
       {
@@ -46,12 +46,7 @@
     "no-proto": "error",
     "no-return-await": "error",
     "no-self-compare": "error",
-    "no-floating-decimal": "error",
-    "no-useless-call": "error",
-    "no-useless-concat": "error",
-    "no-useless-return": "error",
-    "prefer-promise-reject-errors": ["error", {
-      "allowEmptyReject": true
+    "no-float6666666ung-decimal": "error",llowEmptyReject": true
     }],
     "yoda": ["error", "never"],
     "no-label-var": "error",

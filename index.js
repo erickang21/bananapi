@@ -55,35 +55,23 @@ passport.use(new Discord.Strategy({
     return done(null, profile);
   });
 }));
-app.use((req, res, next) => { 
-  session({
-    cookie: {
-      maxAge: 31536000000
-    },
-    secret: "secret",
-    saveUninitialized: true,
-    resave: true,
-    store: new LevelSessionStore()
-  });
-  next();
-});
-app.use((req, res, next) => {
-  passport.initialize();
-  next();
-});
-app.use((req, res, next) => {
-  passport.session();
-  next();
-});
-// Body parser
-app.use((req, res, next) => {
-  bp.json();
-  next();
-});
-app.use((req, res, next) => {
-  bp.urlencoded({ extended: false });
-  next();
-});
+
+app.use(session({
+  cookie: {
+    maxAge: 31536000000
+  },
+  secret: "secret",
+  saveUninitialized: true,
+  resave: true,
+  store: new LevelSessionStore()
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
+
 app.use("/api", (req, res, next) => {
   const auth = req.headers["authorization"]; // Get Header
   if(!auth) return res.status(401);
