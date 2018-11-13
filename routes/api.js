@@ -1,6 +1,5 @@
-const polka = require("polka");
-
-const app = polka();
+const { Router } = require("express");
+const app = Router();
 
 const { Canvas } = require("canvas-constructor");
 const fs = require("fs").promises;

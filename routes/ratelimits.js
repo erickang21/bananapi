@@ -59,7 +59,7 @@ class RatelimitHandler extends Map {
 
   resetTime(key) {
     if (this.timeMap.get(key)) return this.get(key);
-    this.timeMap.set(key, parseInt((Date.now() / 1000).toFixed(0), 10) + this.data.clearAfter / 1000);
+    this.timeMap.set(key, parseInt(((Date.now() / 1000).toFixed(0), 10)) + (this.data.clearAfter / 1000));
     return this.get(key);
   }
 
