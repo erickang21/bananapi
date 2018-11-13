@@ -4,7 +4,7 @@ const config = require("./config.json");
 const permissionLevels = new PermissionLevels()
   .add(0, () => true)
   .add(1, (_, m) => config.devs.includes(m.author.id), { fetch: true })
-  .add(10, (_, m) => m.author.id === "277981712989028353" || m.author.id === "292690616285134850", { break: true, fetch: true });
+  .add(10, (_, m) => m.author.id === "277981712989028353" || m.author.id == "302604426781261824" || m.author.id === "292690616285134850", { break: true, fetch: true });
 
 
 class BananAPIClient extends Client {
