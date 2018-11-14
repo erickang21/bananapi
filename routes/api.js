@@ -31,7 +31,29 @@ function createStar(text) {
   return star;
 }
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
 
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/facts/
+ * @apiName facts
+ * @apiGroup Text
+ * @apiParam {String} text Text to use. Limit of 105 characters.
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/facts", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.status(400).json({ message: "No text provided." });
