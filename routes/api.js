@@ -31,6 +31,24 @@ function createStar(text) {
   return star;
 }
 
+
+app.get("/facts", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 105) return res.status(400).json({ message: "Text must be less than 105 characters." });
+  const image = await fs.readFile(`${process.cwd()}/assets/facts.jpg`);
+  const buff = await new Canvas(373, 498)
+    .addImage(image, 0, 0, 373, 498)
+    .setColor('#000000')
+    .setTextFont('Segoe UI')
+    .setTextSize('20')
+    .setTextAlign('left')
+    .addMultilineText(text, 18, 380, 200, 20)
+    .toBufferAsync(); 
+  res.type("image/png");
+  res.send(buff); 
+})
+
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
@@ -94,6 +112,7 @@ app.get("/humansgood", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 525, 780, 140, 30)
     .toBufferAsync();
+  res.type("image/png");
   res.send(buff); 
 });
 
@@ -131,7 +150,8 @@ app.get("/scroll", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 80, 300, 80, 20)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 
@@ -169,7 +189,8 @@ app.get("/note", async (req, res) => {
     .setTextAlign("left")
     .addMultilineText(text, 400, 455, 140, 30)
     .toBufferAsync();
-  res.send(buff, { "Content-Type": "image/png" }); 
+  res.type("image/png");
+  res.send(buff); 
 });
 
 
