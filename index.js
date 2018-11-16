@@ -9,8 +9,9 @@ const LevelSessionStore = require("level-session-store")(session);
 const app = express();
 
 const serve = require("serve-static");
-app.get("/docs", (req, res) => {
+app.use("/docs", (req, res, next) => {
   serve(path.join(__dirname, "docs"), { index: "index.html" });
+  next();
 });
 
 const fs = require("fs").promises;
