@@ -129,9 +129,6 @@ app.get("/libs", async (req, res) => {
   });
 });
 
-app.get("/docs", async (req, res) => {
-  res.render("docs/index.html")
-})
 
 app.get("/login", passport.authenticate("discord", {
   failureRedirect: "/"
