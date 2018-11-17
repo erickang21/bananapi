@@ -9,11 +9,11 @@ const LevelSessionStore = require("level-session-store")(session);
 const app = express();
 
 const serve = require("serve-static");
-app.get("/docs", async (req, res) => {
-    const file = await require("fs-nextra").readFile(path.join(__dirname, "docs", "index.html"));
-    res.type("text/html");
-    return res.send(file.toString());
+app.use("/docs", (req, res, next) => {
+    serve(path.join(__dirname, "docs"));
+    next();
 });
+app.get("/docs", (req, res, next) => res.render("docs/index.html"));
 
 const fs = require("fs").promises;
 const mountRoutes = require("./routes");
