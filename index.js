@@ -10,7 +10,7 @@ const app = express();
 
 const docRouter = express.Router()
   .use(express.static(path.join(__dirname, "docs")
-  .get("*", (req, res) => res.sendFile("index.html"));
+  .get("*", (_, res) => res.sendFile("index.html"));
 
 app.use("/docs", docRouter);
 
