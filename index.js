@@ -103,7 +103,11 @@ app.get("/", async (req, res) => {
   const dbCount = await app.db.query("SELECT COUNT(*) FROM tokens");
   const users = dbCount.rows[0].count;
   res.render("index.ejs", {
-    authorized: req.isAuthenticated(), count: users, bananapfp: app.client.users.get("277981712989028353").displayAvatarURL({ format: "png", size: 2048 }), tntpfp: app.client.users.get("292690616285134850").displayAvatarURL({ size: 2048 })
+    authorized: req.isAuthenticated(), 
+    count: users, 
+    bananapfp: app.client.users.get("277981712989028353").displayAvatarURL({ size: 2048 }), 
+    tntpfp: app.client.users.get("292690616285134850").displayAvatarURL({ size: 2048 }),
+    icepfp: app.client.users.get("302604426781261824").displayAvatarURL({ size: 2048 })
   });
 });
 
