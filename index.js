@@ -9,7 +9,7 @@ const LevelSessionStore = require("level-session-store")(session);
 const app = express();
 
 const docRouter = express.Router();
-docRouter.use(express.static(path.join(__dirname, "docs"));
+docRouter.use(express.static(path.join(__dirname, "docs")));
 docRouter.get("*", (_, res) => res.sendFile("index.html"));
 
 app.use("/docs", docRouter);
