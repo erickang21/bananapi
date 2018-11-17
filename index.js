@@ -9,7 +9,7 @@ const LevelSessionStore = require("level-session-store")(session);
 const app = express();
 
 app.use(express.static(path.join(__dirname, "docs")));
-app.get("/docs", (req, res) => res.render("index.html"));
+app.get("/docs", (req, res) => res.sendFile("index.html"));
 
 const fs = require("fs").promises;
 const mountRoutes = require("./routes");
