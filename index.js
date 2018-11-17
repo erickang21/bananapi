@@ -8,8 +8,11 @@ const bp = require("body-parser");
 const LevelSessionStore = require("level-session-store")(session);
 const app = express();
 
-app.use(express.static(path.join(__dirname, "docs")));
-app.get("/docs", (req, res) => res.sendFile("index.html"));
+const docRouter = express.Router()
+  .use(express.static(path.join(__dirname, "docs")
+  .get("*", (req, res) => res.sendFile("index.html"));
+
+app.use("/docs", docRouter);
 
 const fs = require("fs").promises;
 const mountRoutes = require("./routes");
