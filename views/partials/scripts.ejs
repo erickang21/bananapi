@@ -9,7 +9,7 @@
      const theme = localStorage.getItem("theme");
      if(theme === "dark") {
        $("body").attr("class", "dark-theme");
-       $("#themeButton").html("Turn on the lights");
+       $("#themeButton").html("Switch Theme");
      }
      $("#themeButton").click(() => {
        const isDark = localStorage.getItem("theme") === "dark";
