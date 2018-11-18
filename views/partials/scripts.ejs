@@ -13,7 +13,7 @@
      }
      $("#themeButton").click(() => {
        const isDark = localStorage.getItem("theme") === "dark";
-       $("#themeButton").html(`Turn ${isDark === "on" : "off"} the lights`);
+       $("#themeButton").html(`Lights ${isDark ? "on" : "off"}!`);
        $("body").attr("class", isDark ? "dark-theme" : "light-theme");
        localStorage.setItem("theme", isDark ? "light" : "dark");
      });
