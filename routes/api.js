@@ -71,6 +71,29 @@ app.get("/facts", async (req, res) => {
   res.send(buff); 
 })
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/disability/
+ * @apiName disability
+ * @apiGroup Image
+ * @apiParam {String} url Image URL to use.
+ * @apiUse Error
+ * @apiUse auth
+ */
 app.get("/disability", async (req, res) => {
   const image = req.query.image || req.query.url;
   if (!image) return res.status(400).json({ message: "No image URL provided." });

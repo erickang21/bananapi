@@ -11,6 +11,7 @@ class BananAPIClient extends Client {
   constructor(app) {
     super({
       prefix: "b.",
+      regexPrefix: /^((hey,?\s*)?bananapi),?\s*/i,
       commandEditing: true,
       typing: false,
       readyMessage: (client) => `${client.user.tag}, Ready to serve ${client.guilds.size} guilds and ${client.users.size} users`,
