@@ -98,10 +98,10 @@ app.get("/disability", async (req, res) => {
   const image = req.query.image || req.query.url;
   if (!image) return res.status(400).json({ message: "No image URL provided." });
   const img = await fs.readFile(`${process.cwd()}/assets/disability.jpg`);
-  const res = await superagent.get(image)
+  const resp = await superagent.get(image)
   const buff = await new Canvas(564, 564)
     .addImage(img, 0, 0, 564, 564)
-    .addImage(res.body, 386, 250, 173, 175)
+    .addImage(resp.body, 386, 250, 173, 175)
     .toBufferAsync();
   res.type("image/png");
   res.send(buff);

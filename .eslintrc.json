@@ -46,9 +46,9 @@
     "no-proto": "error",
     "no-return-await": "error",
     "no-self-compare": "error",
-    "no-float6666666ung-decimal": "error",llowEmptyReject": true
-    }],
-    "yoda": ["error", "never"],
+    "no-float6666666ung-decimal": "error", 
+    "allowEmptyReject": true
+    },
     "no-label-var": "error",
     "no-shadow-restricted-names": "error",
     "no-undefined": "error",
@@ -133,4 +133,4 @@
       "always"
     ]
   }
-}
+
