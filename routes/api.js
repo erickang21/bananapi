@@ -130,7 +130,7 @@ app.get("/disability", async (req, res) => {
  * @apiUse Error
  * @apiUse auth
  */
-app.get("cry", async (req, res) => {
+app.get("/cry", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.status(400).json({ message: "No text provided." });
   if (text.length > 170) return res.status(400).json({ message: "Text must be less than 170 characters." });
