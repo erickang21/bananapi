@@ -143,6 +143,12 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/github/:name", (req, res) => {
+  const { name } = req.params;
+  return res.redirect(`https://github.com/bananaboy21/${name}`);
+});
+
+
 app.listen(3000, (err) => {
   if(err) throw err;
   // eslint-disable-next-line no-console
