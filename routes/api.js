@@ -123,6 +123,44 @@ app.get("/disability", async (req, res) => {
  */
 
 /**
+ * @api {get} /api/cry/
+ * @apiName cry
+ * @apiGroup Image
+ * @apiParam {String} text Text to use. Limit of 170 characters.
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("cry", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 170) return res.status(400).json({ message: "Text must be less than 170 characters." });
+  const image = await fs.readFile(`${process.cwd()}/assets/cry.jpg`);
+  const buff = await new Canvas(1084, 1031)
+    .addImage(image, 0, 0, 1084, 1031)
+    .setTextFont("48px Arial")
+    .setTextAlign("left")
+    .addMultilineText(text, 400, 450, 650, 50)
+    .toBufferAsync();
+  res.type("image/png");
+  res.send(buff);
+})
+
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
  * @api {get} /api/star/
  * @apiName star
  * @apiGroup Text
