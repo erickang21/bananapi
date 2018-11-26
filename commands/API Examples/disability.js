@@ -6,7 +6,7 @@ class disability extends Command {
   constructor(...args) {
     super(...args, {
       description: "Example command for GET /api/disability",
-      usage: "[user:user]"
+      usage: "[user:user]"  
     });
   }
 
