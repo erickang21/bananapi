@@ -14,7 +14,7 @@ class eightball extends Command {
   async run(msg, [text]) {
     const start = Date.now();
     const res = await superagent.get("https://bananapi.ml/api/8ball")
-      .query({ text: text }) // Params
+      .query({ question: text }) // Params
       .set({ Authorization: this.client.config.apikey });
     const end = Date.now();
     let message = `**URL:** https://bananapi.ml/api/8ball\n**API Response Time:** ${end - start} ms\n\n**__Question__**\n${text}\n\n__**API Response:**__\n`;
