@@ -31,9 +31,9 @@ function createStar(text) {
   return star;
 }
 
-String.prototype.toBinary = function () {
-  return this.split("").map((s) => `0${s.charCodeAt(0).toString(2)}`).join(" ");
-};
+function toBinary(str) {
+  return str.split("").map((s) => `0${s.charCodeAt(0).toString(2)}`).join(" ");
+}
 
 /**
  * @apiDefine auth
@@ -101,7 +101,7 @@ app.get("/facts", async (req, res) => {
 app.get("/binary", async (req, res) => {
   const text = req.query.text;
   if (!text) return res.status(400).json({ message: "No text provided." });
-  return res.json({ text: text.toBinary() });
+  return res.json({ text: toBinary(text) });
 });
 /**
  * @apiDefine auth
