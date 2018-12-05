@@ -31,6 +31,10 @@ function createStar(text) {
   return star;
 }
 
+String.prototype.toBinary = function () {
+  return this.split("").map((s) => `0${s.charCodeAt(0).toString(2)}`).join(" ");
+};
+
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
@@ -61,16 +65,44 @@ app.get("/facts", async (req, res) => {
   const image = await fs.readFile(`${process.cwd()}/assets/facts.jpg`);
   const buff = await new Canvas(373, 498)
     .addImage(image, 0, 0, 373, 498)
-    .setColor('#000000')
-    .setTextFont('Segoe UI')
-    .setTextSize('20')
-    .setTextAlign('left')
+    .setColor("#000000")
+    .setTextFont("Segoe UI")
+    .setTextSize("20")
+    .setTextAlign("left")
     .addMultilineText(text, 18, 380, 200, 20)
     .toBufferAsync(); 
   res.type("image/png");
   res.send(buff); 
-})
+});
 
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/binary/
+ * @apiName binary
+ * @apiGroup Text
+ * @apiParam {String} text Text to use.
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("/binary", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  return res.json({ text: text.toBinary() });
+});
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
@@ -98,14 +130,14 @@ app.get("/disability", async (req, res) => {
   const image = req.query.image || req.query.url;
   if (!image) return res.status(400).json({ message: "No image URL provided." });
   const img = await fs.readFile(`${process.cwd()}/assets/disability.jpg`);
-  const resp = await superagent.get(image)
+  const resp = await superagent.get(image);
   const buff = await new Canvas(564, 564)
     .addImage(img, 0, 0, 564, 564)
     .addImage(resp.body, 386, 250, 173, 175)
     .toBufferAsync();
   res.type("image/png");
   res.send(buff);
-})
+});
 
 /**
  * @apiDefine auth
@@ -143,7 +175,7 @@ app.get("/cry", async (req, res) => {
     .toBufferAsync();
   res.type("image/png");
   res.send(buff);
-})
+});
 
 /**
  * @apiDefine auth
