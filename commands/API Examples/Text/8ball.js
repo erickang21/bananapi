@@ -13,7 +13,7 @@ class eightball extends Command {
 
   async run(msg, [text]) {
     const start = Date.now();
-    const res = await superagent.get("https://bananapi.ml/api/eightball")
+    const res = await superagent.get("https://bananapi.ml/api/8ball")
       .query({ text: text }) // Params
       .set({ Authorization: this.client.config.apikey });
     const end = Date.now();
