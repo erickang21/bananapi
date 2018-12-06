@@ -103,6 +103,46 @@ app.get("/binary", async (req, res) => {
   if (!text) return res.status(400).json({ message: "No text provided." });
   return res.json({ text: toBinary(text) });
 });
+
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+/**
+ * @api {get} /api/sacred/
+ * @apiName sacred
+ * @apiGroup Image
+ * @apiParam {String} text Text to use.
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("/sacred", async (req, res) => {
+  const text = req.query.text;
+  if (!text) return res.status(400).json({ message: "No text provided." });
+  if (text.length > 95) return res.status(400).json({ message: "Text must be less than 95 characters." });
+  const image = await fs.readFile(`${process.cwd()}/assets/sacred.jpg`);
+  const buff = await new Canvas(1847, 1703)
+    .addImage(image, 0, 0, 1847, 1703)
+    .setColor("#000000")
+    .setTextFont("Segoe UI")
+    .setTextSize("69")
+    .setTextAlign("left")
+    .addMultilineText(text, 1250, 1050, 400, 60)
+    .toBufferAsync(); 
+  res.type("image/png");
+  res.send(buff);
+});
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
