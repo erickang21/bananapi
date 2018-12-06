@@ -3,7 +3,10 @@ const config = require("./config.json");
 
 const permissionLevels = new PermissionLevels()
   .add(0, () => true)
-  .add(1, (_, m) => config.DevRole.includes(m.roles), { fetch: true }) //Note to banana: add a section in config.json called "DevRole" and the value be "520267421232267284", kthx
+  .add(1, (_, m) => {
+    //m.member.roles.has(config.dvr) I tried, I failed. Here have some restoration
+    config.devs.includes(m.author.id)
+  }, { fetch: true }) 
   .add(10, (_, m) => m.author.id === "277981712989028353" || m.author.id == "302604426781261824" || m.author.id === "292690616285134850" || m.author.id === "304737539846045696", { break: true, fetch: true });
 
 
