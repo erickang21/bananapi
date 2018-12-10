@@ -35,6 +35,12 @@ function toBinary(str) {
   return str.split("").map((s) => `0${s.charCodeAt(0).toString(2)}`).join(" ");
 }
 
+const wrap = (str, limit, brk = "\n") => {
+    if(str.length <= limit) return str;
+    const regex = new RegExp(`(.{1,${limit}})`, "g");
+    return str.match(regex).join(brk);
+}
+
 /**
  * @apiDefine auth
  * @apiHeader {String} Authorization Your API Key
@@ -231,6 +237,100 @@ app.get("/cry", async (req, res) => {
  *       "message": "An error message of what happened."
  *     }
  */
+
+
+/**
+ * @api {get} /api/butterfly/
+ * @apiName butterfly
+ * @apiGroup Image
+ * @apiParam {String} [Left for TNT, note to tnt: please do --Main]
+ * @apiUse Error
+ * @apiUse auth
+ */
+app.get("/butterfly", async (req, res) => {
+    if (!req.query.text) {return res.status(204).send('Uh oh! You never provided a param! Missing: text')}
+    if (!req.query.textb) {return res.status(204).send('Uh oh! You never provided a param! Missing: textb')}
+    if (req.query.text.length > 19) {return res.status(414).send(`Max Characters for text`)}
+    if (req.query.textb.length > 88) {return res.status(414).send(`Max Characters for textb`)}
+
+
+    const image = await fsn.readFile('./imgs/assets.png');
+
+    const img = await new Canvas(557, 417)
+     .addImage(image, 0, 0, 557, 417)
+     .setColor('#FFFFFF')
+     .setTextFont('Segoe UI')
+     .setTextSize('20')
+     .setTextAlign('left')
+     .addText(req.query.text, 287, 395)
+     .addText(wrap(req.query.textb,10), 367, 42)
+     .toBufferAsync();
+
+    res.type("png").send(img)
+});
+
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
+
+/**
+ * @api {get} /api/board/
+ * @apiName board
+ * @apiGroup Image
+ * @apiParam {String} [Left for TNT, note to tnt: please do --Main]
+ * @apiUse Error
+ * @apiUse auth
+ */
+
+app.get('/image/board', async function (req, res) {
+    if (!req.query) {return res.status(204).send('Uh oh! You never provided a param! Missing: text')}
+    if (!req.query.text) {return res.status(204).send('Uh oh! You never provided a param! Missing: text')}
+    if (req.query.text.length > 80) {return res.status(414).send(`Max Characters`)}
+
+
+    
+    const image = await fsn.readFile('.\\assets\\lisasimpson.png');
+    
+    const img = await new Canvas(750, 558)
+     .addImage(image, 0, 0, 750, 558)
+     .setColor('#000000')
+     .setTextFont('Segoe UI')
+     .setTextSize('40')
+     .setTextAlign('left')
+     .addText(wrap(req.query.text,20), 158, 177)
+     .toBufferAsync(); 
+
+
+    res.type("png").send(img)
+});
+
+/**
+ * @apiDefine auth
+ * @apiHeader {String} Authorization Your API Key
+ */
+
+/**
+ * @apiDefine Error
+ * @apiError ClientError Something went wrong on your side.
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 4xx Client Error
+ *     {
+ *       "message": "An error message of what happened."
+ *     }
+ */
+
 
 /**
  * @api {get} /api/star/
