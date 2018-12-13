@@ -243,8 +243,8 @@ app.get("/cry", async (req, res) => {
  * @api {get} /api/butterfly/
  * @apiName butterfly
  * @apiGroup Image
- * @apiParam {String} is this an api (text)
- * @apiParam {String} bananapi.ml (textb)
+ * @apiParam {String} is this an api (text). Limit of 19 chars
+ * @apiParam {String} bananapi.ml (textb). Limit of 88 chars
  * @apiUse Error
  * @apiUse auth
  */
@@ -290,7 +290,7 @@ app.get("/butterfly", async (req, res) => {
  * @api {get} /api/board/
  * @apiName board
  * @apiGroup Image
- * @apiParam {String} Something to make the board say
+ * @apiParam {String} Something to make the board say. Limit of 80 chars
  * @apiUse Error
  * @apiUse auth
  */
