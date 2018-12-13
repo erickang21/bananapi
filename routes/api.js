@@ -243,7 +243,8 @@ app.get("/cry", async (req, res) => {
  * @api {get} /api/butterfly/
  * @apiName butterfly
  * @apiGroup Image
- * @apiParam {String} [Left for TNT, note to tnt: please do --Main]
+ * @apiParam {String} is this an api (text)
+ * @apiParam {String} bananapi.ml (textb)
  * @apiUse Error
  * @apiUse auth
  */
@@ -289,12 +290,12 @@ app.get("/butterfly", async (req, res) => {
  * @api {get} /api/board/
  * @apiName board
  * @apiGroup Image
- * @apiParam {String} [Left for TNT, note to tnt: please do --Main]
+ * @apiParam {String} Something to make the board say
  * @apiUse Error
  * @apiUse auth
  */
 
-app.get('/image/board', async function (req, res) {
+app.get('/board', async function (req, res) {
     if (!req.query) {return res.status(204).send('Uh oh! You never provided a param! Missing: text')}
     if (!req.query.text) {return res.status(204).send('Uh oh! You never provided a param! Missing: text')}
     if (req.query.text.length > 80) {return res.status(414).send(`Max Characters`)}
