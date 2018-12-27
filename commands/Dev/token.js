@@ -6,7 +6,7 @@ class Token extends Command {
     super(...args, {
       description: "View your BananAPI token.",
       name: "token",
-      usage: "[user:str]"
+      usage: "[user:user]"
     });
   }
 
