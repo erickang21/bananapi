@@ -6,7 +6,7 @@ class Accept extends Command {
     super(...args, {
       description: "Accept a user that applied.",
       name: "accept",
-      permissionLevel: 1,
+      permissionLevel: 2,
       usage: "[user:member]"
     });
   }
