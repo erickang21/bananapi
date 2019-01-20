@@ -12,6 +12,7 @@ class Revoke extends Command {
   }
 
   async run(msg, [user, reason]) {   
+        if (!msg.author.id === '338600456383234058' || !msg.author.id === '292690616285134850' || !msg.author.id === '478675118332051466' || !msg.author.id === '304737539846045696') return msg.send("You do not have perms to do that.")
     const res = await this.client.db.query("SELECT * FROM tokens WHERE userid = $1", [user.user.id]);
     if (!res.rows.length) return msg.send("An error occurred. The user may not have a token yet.");
     await this.client.db.query("DELETE FROM tokens WHERE userid = $1", [user.user.id]);
