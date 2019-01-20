@@ -6,12 +6,13 @@ class Accept extends Command {
     super(...args, {
       description: "Accept a user that applied.",
       name: "accept",
-      permissionLevel: 1,
+      permissionLevel: 0,
       usage: "[user:member]"
     });
   }
 
   async run(msg, [user]) {
+    if (!msg.author.id === '338600456383234058' || !msg.author.id === '292690616285134850' || !msg.author.id === '478675118332051466' || !msg.author.id === '304737539846045696') return msg.send("You do not have perms to do that.")
     const token = crypto.randomBytes(32).toString("hex");
     const test = await this.client.db.query("SELECT * FROM tokens WHERE userid = $1", [user.user.id]);
     if (test.rows.length) return msg.send("It looks like this user already has a token!");
