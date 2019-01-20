@@ -6,7 +6,7 @@ class Revoke extends Command {
     super(...args, {
       description: "Revoke a user's token.",
       name: "revoke",
-      permissionLevel: 1,
+      permissionLevel: 0,
       usage: "[user:member][reason:str]"
     });
   }
