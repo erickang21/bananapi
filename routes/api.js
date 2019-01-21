@@ -168,10 +168,11 @@ app.get("/sacred", async (req, res) => {
  * @api {get} /api/disability/
  * @apiName disability
  * @apiGroup Image
- * @apiParam {String} url Image URL to use.
+ * @apiParam {String} url Image URL to use. 
  * @apiUse Error
  * @apiUse auth
  */
+
 app.get("/disability", async (req, res) => {
   const image = req.query.image || req.query.url;
   if (!image) return res.status(400).json({ message: "No image URL provided." });
