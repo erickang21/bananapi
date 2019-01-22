@@ -36,10 +36,10 @@ function toBinary(str) {
 }
 
 const wrap = (str, limit, brk = "\n") => {
-    if(str.length <= limit) return str;
-    const regex = new RegExp(`(.{1,${limit}})`, "g");
-    return str.match(regex).join(brk);
-}
+  if(str.length <= limit) return str;
+  const regex = new RegExp(`(.{1,${limit}})`, "g");
+  return str.match(regex).join(brk);
+};
 
 /**
  * @apiDefine auth
@@ -80,6 +80,24 @@ app.get("/facts", async (req, res) => {
   res.type("image/png");
   res.send(buff); 
 });
+
+app.get("/virgin", async (req, res) => {
+  const img = req.query.image || req.query.url;
+  if (!img) return res.status(400).json({ message: "No image provided." });
+  const image = await fs.readFile(`${process.cwd()}/assets/retarded.jpg`);
+  const img1 = await superagent.get(img);
+  const buff = await new Canvas(540, 474)
+    .addImage(image, 0, 0, 540, 474)
+    .setTextSize("20")
+    .setColor("#000000")
+    .setTextAlign("left")
+    .addImage(img1, 320, 320, 150, 150)
+    .toBufferAsync(); 
+  res.type("image/png");
+  res.send(buff); 
+});
+
+
 
 /**
  * @apiDefine auth
@@ -249,25 +267,25 @@ app.get("/cry", async (req, res) => {
  * @apiUse auth
  */
 app.get("/butterfly", async (req, res) => {
-    if (!req.query.text) {return res.status(204).send('Uh oh! You never provided a param! Missing: text')}
-    if (!req.query.textb) {return res.status(204).send('Uh oh! You never provided a param! Missing: textb')}
-    if (req.query.text.length > 19) {return res.status(414).send(`Max Characters for text`)}
-    if (req.query.textb.length > 88) {return res.status(414).send(`Max Characters for textb`)}
+  if (!req.query.text) {return res.status(204).send("Uh oh! You never provided a param! Missing: text");}
+  if (!req.query.textb) {return res.status(204).send("Uh oh! You never provided a param! Missing: textb");}
+  if (req.query.text.length > 19) {return res.status(414).send("Max Characters for text");}
+  if (req.query.textb.length > 88) {return res.status(414).send("Max Characters for textb");}
 
 
-    const image = await fsn.readFile('./imgs/assets.png');
+  const image = await fs.readFile("./imgs/assets.png");
 
-    const img = await new Canvas(557, 417)
-     .addImage(image, 0, 0, 557, 417)
-     .setColor('#FFFFFF')
-     .setTextFont('Segoe UI')
-     .setTextSize('20')
-     .setTextAlign('left')
-     .addText(req.query.text, 287, 395)
-     .addText(wrap(req.query.textb,10), 367, 42)
-     .toBufferAsync();
+  const img = await new Canvas(557, 417)
+    .addImage(image, 0, 0, 557, 417)
+    .setColor("#FFFFFF")
+    .setTextFont("Segoe UI")
+    .setTextSize("20")
+    .setTextAlign("left")
+    .addText(req.query.text, 287, 395)
+    .addText(wrap(req.query.textb, 10), 367, 42)
+    .toBufferAsync();
 
-    res.type("png").send(img)
+  res.type("png").send(img);
 });
 
 /**
@@ -295,26 +313,26 @@ app.get("/butterfly", async (req, res) => {
  * @apiUse auth
  */
 
-app.get('/image/board', async function (req, res) {
-    if (!req.query) {return res.status(204).send('Uh oh! You never provided a param! Missing: text')}
-    if (!req.query.text) {return res.status(204).send('Uh oh! You never provided a param! Missing: text')}
-    if (req.query.text.length > 80) {return res.status(414).send(`Max Characters`)}
+app.get("/image/board", async (req, res) => {
+  if (!req.query) {return res.status(204).send("Uh oh! You never provided a param! Missing: text");}
+  if (!req.query.text) {return res.status(204).send("Uh oh! You never provided a param! Missing: text");}
+  if (req.query.text.length > 80) {return res.status(414).send("Max Characters");}
 
 
     
-    const image = await fsn.readFile('.\\assets\\lisasimpson.png');
+  const image = await fs.readFile(".\\assets\\lisasimpson.png");
     
-    const img = await new Canvas(750, 558)
-     .addImage(image, 0, 0, 750, 558)
-     .setColor('#000000')
-     .setTextFont('Segoe UI')
-     .setTextSize('40')
-     .setTextAlign('left')
-     .addText(wrap(req.query.text,20), 158, 177)
-     .toBufferAsync(); 
+  const img = await new Canvas(750, 558)
+    .addImage(image, 0, 0, 750, 558)
+    .setColor("#000000")
+    .setTextFont("Segoe UI")
+    .setTextSize("40")
+    .setTextAlign("left")
+    .addText(wrap(req.query.text, 20), 158, 177)
+    .toBufferAsync(); 
 
 
-    res.type("png").send(img)
+  res.type("png").send(img);
 });
 
 /**
