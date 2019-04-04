@@ -3,12 +3,12 @@ const config = require("./config.json");
 
 const permissionLevels = new PermissionLevels()
   .add(0, () => true)
-  .add(1, (_, m) => {
+  .add(1, (m) => {
     //m.member.roles.has(config.dvr) I tried, I failed. Here have some restoration
     config.devs.includes(m.author.id);
   }, { fetch: true }) 
-  .add(2, (_, m) => m.author.id === '478675118332051466' || m.author.id === '338600456383234058' || m.author.id === '292690616285134850' || m.author.id === '304737539846045696', { break: true, fetch: true })
-  .add(10, (_, m) => m.author.id === "277981712989028353" || m.author.id === "302604426781261824" || m.author.id === "292690616285134850" || m.author.id === "304737539846045696", { break: true, fetch: true });
+  .add(2, (m) => m.author.id === '478675118332051466' || m.author.id === '338600456383234058' || m.author.id === '292690616285134850' || m.author.id === '304737539846045696', { break: true, fetch: true })
+  .add(10, (m) => m.author.id === "277981712989028353" || m.author.id === "302604426781261824" || m.author.id === "292690616285134850" || m.author.id === "304737539846045696", { break: true, fetch: true });
 
 
 class BananAPIClient extends Client {
