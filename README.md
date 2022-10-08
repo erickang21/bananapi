@@ -1,5 +1,3 @@
 # bananapi
 
-Welcome to the BananAPI, a multipurpose API for your needs!
-
-This is still currently under development. If it is finished, I will announce it here.
+A multipurpose, public, and authentication-based Node.js API that specializes in image manipulation through the [Canvas](https://www.npmjs.com/package/canvas) library. This project was coded with a Discord bot as an interface for new users.
